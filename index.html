@@ -84,16 +84,17 @@
                 const path = Math.sqrt(width**2 + height**2)
                 const timer = setInterval(() => {
                     const [[xmin, ymin], [xmax, ymax]] = that.getMinMaxShapeCoords(that.shape, curx, cury)
-                    canvasCtx.clearRect(xmin, ymin, xmin+xmax, ymin+ymax)
+                    canvasCtx.clearRect(xmin-2, ymin-2, xmin+xmax+2, ymin+ymax+2)
 
                     curx = curx + Math.cos(angle)*speed
                     cury = cury + Math.sin(angle)*speed
 
+                    that.draw(canvasCtx, curx, cury)
                     if (Math.sqrt((startx-curx)**2 + (starty-cury)**2) > path) {
                         that.draw(canvasCtx, endx, endy)
                         clearInterval(timer)
+                        this.rotateOnAngle(-angle)
                     }
-                    that.draw(canvasCtx, curx, cury)
                 }, 1)
             }
 
@@ -160,9 +161,10 @@
             const fabric = new BulletFabric()
 
             setInterval(() => {
-                const bullet = fabric.getBullet(colors[getRandomNumber(0, 0)], shapes[getRandomNumber(0, 0)])
+                canvasContext.clearRect(0, 0, 800, 400)
+                const bullet = fabric.getBullet(colors[getRandomNumber(0, 9)], shapes[getRandomNumber(0, 1)])
                 bullet.move(canvasContext, getRandomNumber(0, 800), getRandomNumber(0, 400), getRandomNumber(0, 800), getRandomNumber(0, 400), 2)
-            }, 3000)
+            }, 1000)
         }
     </script>
 </body>
